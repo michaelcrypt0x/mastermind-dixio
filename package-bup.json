@@ -1,0 +1,36 @@
+{
+  "name": "mastermind-dixio",
+  "version": "0.0.1",
+  "description": "Test around mastermind on Node.js.",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "rollup --config rollup.config.dev.mjs",
+    "build": "rollup --config rollup.config.dist.mjs",
+    "watch": "rollup --watch --config rollup.config.dev.mjs",
+    "start": "npm run dev",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "format": "prettier --check src/** dev/** test/**",
+    "format:write": "prettier --write src/** dev/** test/**",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "michael soisson",
+  "license": "MIT",
+  "dependencies": {
+    "app-root-path": "3.1.0",
+    "express": "4.18.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-replace": "^5.0.2",
+    "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@types/node": "20.6.2",
+    "rollup": "^3.20.2",
+    "rollup-plugin-copy": "3.5.0",
+    "rollup-plugin-delete": "2.0.0",
+    "rollup-plugin-serve": "^2.0.2",
+    "tslib": "2.6.2",
+    "typescript": "5.2.2"
+  }
+}
