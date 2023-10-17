@@ -10,8 +10,8 @@ export class Game {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'smallint', default: 0 })
-  gameId: number;
+  @Column({ type: 'text', default: 0 })
+  gameId: string;
 
   @Column({ type: 'smallint', default: 0 })
   feedbackId: number;

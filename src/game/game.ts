@@ -1,5 +1,5 @@
 //6 colors
-
+import { randomUUID } from 'crypto';
 type ColorType = 'yellow' | 'orange' | 'red' | 'green' | 'blue' | 'purple';
 type GameStatus = 'playing' | 'win' | 'lose';
 
@@ -17,6 +17,7 @@ interface Hints {
 }
 
 interface State {
+  gameId: string ;
   status: GameStatus;
   currentAttempt: number;
   maxAttempt: number;
@@ -25,11 +26,12 @@ interface State {
 let state;
 export const initState = (): State => {
   state = {
+    gameId: randomUUID(),
     status: 'playing',
     currentAttempt: 0,
     maxAttempt: 10,
   };
-  
+
   return state;
 };
 

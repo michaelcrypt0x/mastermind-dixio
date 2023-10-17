@@ -51,8 +51,8 @@ Date(yyyy-mm-dd)    Author              Comments
 
 CREATE TABLE Game(
 	 "id" SERIAL PRIMARY KEY ,
-	"gameId" smallint default 0 , 
-	"feedBackId" smallint default 0 ,
+	"gameId" TEXT  , 
+	"feedbackId" smallint default 0 ,
 	"secret" TEXT,
 	"userAttempt" TEXT,
 	"status" TEXT,

@@ -1,5 +1,5 @@
 export interface CreateGameDto {
-  gameId: number;
+  gameId: string;
   feedbackId: number;
   secret: string;
   userAttempt: string;
@@ -9,7 +9,7 @@ export interface CreateGameDto {
 }
 
 export interface UpdateGameDto {
-  gameId: number;
+  gameId: string ;
   feedbackId: number;
   secret: string;
   userAttempt: string;

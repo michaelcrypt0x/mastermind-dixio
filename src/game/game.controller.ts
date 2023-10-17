@@ -25,26 +25,31 @@ export class GameController {
     summary:
       'method will be used to retrieve the history of proposals for a given game and their feedbacks.',
   })
-  getOneGame(@Param('gameId') gameId: number) {
+  getOneGame(@Param('gameId') gameId: string) {
     return this.gameService.findOne(gameId);
   }
 
   // eslint-disable-next-line prettier/prettier
-@Post()
+@Post('init')
   @ApiOperation({
     summary:
       'method will be used to initiate a new game with a random code of four colors among six.',
   })
-  async initGame(@Body() createGameDto: CreateGameDto) {
+  async initGame() {
+    console.log('initGame');
     const secret = generateSecret();
     const state = initState();
+    const createGameDto = {} as CreateGameDto;
+    createGameDto.gameId = state.gameId;
     createGameDto.status = state.status;
     createGameDto.feedbackId = state.currentAttempt;
     createGameDto.white = 0;
     createGameDto.black = 0;
     createGameDto.secret = secret.toString();
-
+    console.log('createDto = ' + JSON.stringify(createGameDto));
     const game = await this.gameService.createOne(createGameDto);
+    console.log('gameid = ' + game.id);
+
     return game.gameId;
   }
 }

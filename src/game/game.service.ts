@@ -14,7 +14,7 @@ export class GameService {
     return this.gameRepository.find();
   }
 
-  async findOne(gameId: number): Promise<Game | null> {
+  async findOne(gameId: string): Promise<Game | null> {
     return this.gameRepository.findOneBy({ gameId });
   }
 
