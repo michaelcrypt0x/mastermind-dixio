@@ -3,7 +3,7 @@ export interface CreateGameDto {
   feedbackId: number;
   secret: string;
   userAttempt: string;
-  status: string;
+  state: string;
   black: number;
   white: number;
 }
@@ -13,7 +13,7 @@ export interface UpdateGameDto {
   feedbackId: number;
   secret: string;
   userAttempt: string;
-  status: string;
+  state: string;
   black: number;
   white: number;
 }

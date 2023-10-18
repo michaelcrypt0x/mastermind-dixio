@@ -11,7 +11,7 @@ import { CreateGameDto, UpdateGameDto } from './dto/game.dto';
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Get()
+  @Get('games')
   @ApiOperation({
     summary:
       'method will be used to retrieve all games (identified by their id) and the number of tries and the latest feedback',
@@ -20,7 +20,7 @@ export class GameController {
     return this.gameService.findAll();
   }
 
-  @Get(':gameId')
+  @Get('game/:gameId')
   @ApiOperation({
     summary:
       'method will be used to retrieve the history of proposals for a given game and their feedbacks.',
@@ -41,15 +41,15 @@ export class GameController {
     const state = initState();
     const createGameDto = {} as CreateGameDto;
     createGameDto.gameId = state.gameId;
-    createGameDto.status = state.status;
+    createGameDto.state = state.status;
     createGameDto.feedbackId = state.currentAttempt;
     createGameDto.white = 0;
     createGameDto.black = 0;
     createGameDto.secret = secret.toString();
+    createGameDto.userAttempt='';
     console.log('createDto = ' + JSON.stringify(createGameDto));
     const game = await this.gameService.createOne(createGameDto);
     console.log('gameid = ' + game.id);
-
     return game.gameId;
   }
 }

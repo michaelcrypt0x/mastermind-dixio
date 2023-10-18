@@ -3,16 +3,16 @@ import 'jest-extended';
 import * as request from 'supertest';
 import superdebug from 'superagent-debugger';
 
-export const createGame = () =>
-    describe('AppController (e2e)', () => {
+export const findAll = () =>
+    describe('findAll (e2e)', () => {
         const url  = 'http://localhost:3000'
         beforeAll(() => {
             jest.setTimeout(900 * 1000);
           });
-        it('/ (Post)', async () => {
+        it('/(find)', async () => {
             //create game 
             const res = await request(url)
-            .post(`/api/init`)
+            .get(`/api/games`)
             .use(superdebug(console.info));
             if (res.error) console.debug(res.error);
                 console.log('############END#########');
