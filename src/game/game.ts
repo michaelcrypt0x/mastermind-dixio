@@ -23,7 +23,12 @@ export interface Hints {
 }
 
 export const WIN_BLACK = '1111';
+export const INIT_BLACK = '0000';
+export const INIT_WHITE = '0000';
+export const INIT_HINT_WHITE = '';
+export const INIT_HINT_BLACK = '';
 export const MAX_ATTEMPT = 10;
+export const PEGS_PER_ROW = 4;
 export interface State {
   gameId: string;
   status: GameStatus;
@@ -38,8 +43,8 @@ export const initState = (): State => {
     gameId: randomUUID(),
     status: 'playing',
     currentAttempt: 0,
-    maxAttempt: 10,
-    hints: { black: '0000', white: '0000' },
+    maxAttempt: MAX_ATTEMPT,
+    hints: { black: INIT_HINT_BLACK, white: INIT_HINT_WHITE },
   };
 
   return state;
@@ -54,10 +59,9 @@ export const generateSecret = (): Array<ColorType> => {
     secret[i] = colors[randomIndex];
   }
   return secret;
-  //return s.reverse();
 };
 
-const PEGS_PER_ROW = 4;
+
 
 // update the game state
 

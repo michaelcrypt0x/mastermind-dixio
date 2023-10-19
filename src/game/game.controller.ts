@@ -21,6 +21,8 @@ import {
   State,
   GameStatus,
   MAX_ATTEMPT,
+  INIT_WHITE,
+  INIT_BLACK,
 } from './game';
 import { CreateGameDto, UpdateGameDto } from './dto/game.dto';
 
@@ -60,8 +62,8 @@ export class GameController {
     createGameDto.gameId = state.gameId;
     createGameDto.state = state.status;
     createGameDto.feedbackId = state.currentAttempt;
-    createGameDto.white = '0000';
-    createGameDto.black = '0000';
+    createGameDto.white = INIT_WHITE;
+    createGameDto.black = INIT_BLACK;
     createGameDto.secret = secret.toString();
     createGameDto.userAttempt = '';
     console.log('createDto = ' + JSON.stringify(createGameDto));
@@ -86,6 +88,8 @@ export class GameController {
     state.hints = { black: updateGameDto.black, white: updateGameDto.white };
     state.status = updateGameDto.state as GameStatus;
     state.maxAttempt = MAX_ATTEMPT;
+
+
 
     updateState(userColors, state, secretGame);
     updateGameDto.feedbackId = state.currentAttempt;
