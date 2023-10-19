@@ -21,8 +21,8 @@ CREATE TABLE Game(
 	"secret" TEXT,
 	"userAttempt" TEXT,
 	"status" TEXT,
-	"black" smallint default 0 ,
-    "white" smallint default 0 ,
+	"black" TEXT default 0000 ,
+    "white" TEXT default 0000 ,
 	"createDate" timestamp default current_timestamp
 );
 

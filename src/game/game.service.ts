@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Game } from './game.entity';
-import { CreateGameDto } from './dto/game.dto';
+import { CreateGameDto, UpdateGameDto } from './dto/game.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -16,12 +16,23 @@ export class GameService {
     return this.gameRepository.find();
   }
 
-  async findOne(gameId: string): Promise<Game | null> {
-    return this.gameRepository.findOneBy({ gameId });
+  async findOne(gameId: string): Promise<Game[] | null> {
+    return this.gameRepository.find({
+      where: {
+        gameId: gameId,
+      },
+    });
+    //   return this.gameRepository.findOneBy({ gameId });
   }
 
   async createOne(createGameDto: CreateGameDto): Promise<Game | null> {
     const game = await this.gameRepository.save(createGameDto);
     return game;
   }
+  async updateOne(updateGameDto: UpdateGameDto): Promise<Game | null> {
+    const game = await this.gameRepository.save(updateGameDto);
+    return game;
+  }
 }
+
+

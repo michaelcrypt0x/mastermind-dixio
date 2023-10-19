@@ -4,16 +4,16 @@ export interface CreateGameDto {
   secret: string;
   userAttempt: string;
   state: string;
-  black: number;
-  white: number;
+  black: string;
+  white: string;
 }
 
 export interface UpdateGameDto {
-  gameId: string ;
+  gameId: string;
   feedbackId: number;
   secret: string;
   userAttempt: string;
   state: string;
-  black: number;
-  white: number;
+  black: string;
+  white: string;
 }

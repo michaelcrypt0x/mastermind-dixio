@@ -1,10 +1,27 @@
-import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { Request } from 'express';
 
 import { ApiOperation } from '@nestjs/swagger';
 import { GameService } from './game.service';
 import { Game } from './game.entity';
-import { generateSecret, initState } from './game';
+import {
+  updateState,
+  generateSecret,
+  getHints,
+  initState,
+  ColorType,
+  State,
+  GameStatus,
+} from './game';
 import { CreateGameDto, UpdateGameDto } from './dto/game.dto';
 
 @Controller()
@@ -43,20 +60,38 @@ export class GameController {
     createGameDto.gameId = state.gameId;
     createGameDto.state = state.status;
     createGameDto.feedbackId = state.currentAttempt;
-    createGameDto.white = 0;
-    createGameDto.black = 0;
+    createGameDto.white = '0000';
+    createGameDto.black = '0000';
     createGameDto.secret = secret.toString();
-    createGameDto.userAttempt='';
+    createGameDto.userAttempt = '';
     console.log('createDto = ' + JSON.stringify(createGameDto));
     const game = await this.gameService.createOne(createGameDto);
     console.log('gameid = ' + game.id);
     return game.gameId;
   }
-}
-/*@Put(':id')
-@ApiOperation({ summary: 'method will be used to propose a solution for a given game.' })
-async updateGame(@Param('id') id: number, @Body() updateGameDto: UpdateGameDto) {
-  
 
-  return this.usersService.update(+id, updateUserDto);
-}*/
+  @Put('game/:gameId')
+  @ApiOperation({
+    summary: 'method will be used to propose a solution for a given game.',
+  })
+  async updateGame(
+    @Param('gameId') gameId: string,
+    @Body() updateGameDto: UpdateGameDto,
+  ) {
+    const userColors = updateGameDto.userAttempt.split(',') as Array<ColorType>;
+
+    const state = {} as State;
+    state.gameId = updateGameDto.gameId;
+    state.currentAttempt = updateGameDto.feedbackId;
+    state.hints = { black: updateGameDto.black, white: updateGameDto.white };
+    state.status = updateGameDto.state as GameStatus;
+
+    updateState(userColors, state);
+    updateGameDto.feedbackId = state.currentAttempt;
+    updateGameDto.state = state.status;
+    updateGameDto.white = state.hints.white;
+    updateGameDto.black = state.hints.black;
+    this.gameService.updateOne(updateGameDto);
+    return updateGameDto;
+  }
+}

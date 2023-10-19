@@ -25,11 +25,11 @@ export class Game {
   @Column({ type: 'text' })
   state: string;
 
-  @Column({ type: 'smallint', default: 0 })
-  black: number;
+  @Column({ type: 'text', default: 0 })
+  black: string;
 
-  @Column({ type: 'smallint', default: 0 })
-  white: number;
+  @Column({ type: 'text', default: 0 })
+  white: string;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createDate: Date;

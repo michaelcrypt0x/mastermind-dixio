@@ -4,8 +4,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 
 import { AppModule } from '../src/app.module';
-import { findOne } from './02-get-game.spec';
-import { findAll } from './02-getAll-game.spec';
+
+import { findAll } from './03-getAll-game.spec';
+import { updateGame } from './04-put-game.spec';
 
 describe('Model - sequentially run tests', () => {
   let app: INestApplication;
@@ -21,6 +22,8 @@ describe('Model - sequentially run tests', () => {
     await app.init();
   });
   //createGame();
-  //findOne('212085b8-5400-4894-b6ad-b5c318827036');
-  findAll();
+  //findOne('b5d7c45f-df48-4b24-8ccc-45385158d88e');
+  //findAll();
+  updateGame('b5d7c45f-df48-4b24-8ccc-45385158d88e', 'yellow,red,blue,blue');
+
 });

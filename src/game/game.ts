@@ -1,7 +1,13 @@
 //6 colors
 import { randomUUID } from 'crypto';
-type ColorType = 'yellow' | 'orange' | 'red' | 'green' | 'blue' | 'purple';
-type GameStatus = 'playing' | 'win' | 'lose';
+export type ColorType =
+  | 'yellow'
+  | 'orange'
+  | 'red'
+  | 'green'
+  | 'blue'
+  | 'purple';
+export type GameStatus = 'playing' | 'win' | 'lose';
 
 const colors: Array<ColorType> = [
   'yellow',
@@ -11,16 +17,18 @@ const colors: Array<ColorType> = [
   'blue',
   'purple',
 ];
-interface Hints {
-  black: number;
-  white: number;
+export interface Hints {
+  black: string;
+  white: string;
 }
 
-interface State {
-  gameId: string ;
+const WIN_BLACK='1111';
+export interface State {
+  gameId: string;
   status: GameStatus;
   currentAttempt: number;
   maxAttempt: number;
+  hints: Hints;
 }
 
 let state;
@@ -30,6 +38,7 @@ export const initState = (): State => {
     status: 'playing',
     currentAttempt: 0,
     maxAttempt: 10,
+    hints: { black: '0000', white: '0000' },
   };
 
   return state;
@@ -58,27 +67,25 @@ const blackPeg = (userCombination, secretCombination, hints: Hints) => {
     // if it's the same type (and same position cause they have the same index)
     if (userCombination[i] === secretCombination[i]) {
       // mark as checked
-      secretCombination[i] = userCombination[i] = null;
       // increment black pegs
-      hints.black += 1;
+      hints.black += '1';
+    } else {
+      hints.black += '0';
     }
   }
 };
 
 const whitePeg = (userCombination, secretCombination, hints: Hints) => {
-  for (let i = 0; i < PEGS_PER_ROW; i += 1) {
-    for (let x = 0; x < PEGS_PER_ROW; x += 1) {
-      // if not already checked
-      if (userCombination[i] && secretCombination[x]) {
-        // if it's the same type (but different positions cause the index doesn't match)
-        if (userCombination[i] === secretCombination[x]) {
-          // mark as checked
-          secretCombination[x] = userCombination[i] = null;
-          // increment white pegs
-          hints.white += 1;
-        }
+  for (let userI = 0; userI < PEGS_PER_ROW; userI += 1) {
+    let founded = false;
+    for (let secretX = 0; secretX < PEGS_PER_ROW; secretX += 1) {
+      if (userCombination[userI] === secretCombination[secretX]) {
+        founded = false;
+      } else {
+        founded = true;
       }
     }
+    founded ? (hints.white += '1') : (hints.white += '0');
   }
 };
 export const getHints = (combination, secret): Hints => {
@@ -86,7 +93,7 @@ export const getHints = (combination, secret): Hints => {
   const secretCombination = [...secret];
   const userCombination = [...combination];
   // initialize hints counters
-  const hints = { black: 0, white: 0 } as Hints;
+  const hints = { black: '', white: '' } as Hints;
   blackPeg(userCombination, secretCombination, hints);
   whitePeg(userCombination, secretCombination, hints);
 
@@ -94,9 +101,10 @@ export const getHints = (combination, secret): Hints => {
   return hints;
 };
 
-export const checkCombination = (combination) => {
-  const hints: Hints = getHints(combination, secret);
-  if (hints.black === PEGS_PER_ROW) {
+export const updateState = (userAttempt: Array<ColorType>,state:State): State => {
+  const hints = getHints(userAttempt, secret);
+
+  if (state.hints.black === WIN_BLACK ) {
     state.status = 'win';
   } else {
     if (state.currentAttempt <= state.maxAttempt) {
@@ -106,5 +114,6 @@ export const checkCombination = (combination) => {
       state.status = 'lose';
     }
   }
-  return { ...state, hints, secret: state.status === 'lose' && secret };
+
+  return state;
 };
