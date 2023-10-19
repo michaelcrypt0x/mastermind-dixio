@@ -24,6 +24,10 @@ describe('Model - sequentially run tests', () => {
   //createGame();
   //findOne('b5d7c45f-df48-4b24-8ccc-45385158d88e');
   //findAll();
-  updateGame('b5d7c45f-df48-4b24-8ccc-45385158d88e', 'yellow,red,blue,blue');
-
+  //updateGame('b5d7c45f-df48-4b24-8ccc-45385158d88e', 'yellow,red,blue,blue','purple,purple,yellow,green);
+  updateGame(
+    'b5d7c45f-df48-4b24-8ccc-45385158d88e',
+    'purple,purple,yellow,green',
+    'purple,purple,yellow,green'
+  );
 });

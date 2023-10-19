@@ -22,7 +22,8 @@ export interface Hints {
   white: string;
 }
 
-const WIN_BLACK='1111';
+export const WIN_BLACK = '1111';
+export const MAX_ATTEMPT = 10;
 export interface State {
   gameId: string;
   status: GameStatus;
@@ -57,8 +58,7 @@ export const generateSecret = (): Array<ColorType> => {
 };
 
 const PEGS_PER_ROW = 4;
-// generate the secret key passing the level's colors
-const secret = generateSecret();
+
 // update the game state
 
 /* check for pegs on correct position (black pegs)*/
@@ -90,7 +90,7 @@ const whitePeg = (userCombination, secretCombination, hints: Hints) => {
 };
 export const getHints = (combination, secret): Hints => {
   // create a local copy of both combinations
-  const secretCombination = [...secret];
+  const secretCombination =  [...secret];
   const userCombination = [...combination];
   // initialize hints counters
   const hints = { black: '', white: '' } as Hints;
@@ -101,18 +101,23 @@ export const getHints = (combination, secret): Hints => {
   return hints;
 };
 
-export const updateState = (userAttempt: Array<ColorType>,state:State): State => {
+export const updateState = (
+  userAttempt: Array<ColorType>,
+  state: State,
+  secret,
+): State => {
   const hints = getHints(userAttempt, secret);
-
-  if (state.hints.black === WIN_BLACK ) {
+  state.hints = hints;
+  if (state.hints.black === WIN_BLACK) {
     state.status = 'win';
   } else {
     if (state.currentAttempt <= state.maxAttempt) {
       state.status = 'playing';
-      state.currentAttempt += 1;
+      
     } else {
       state.status = 'lose';
     }
+    state.currentAttempt += 1;
   }
 
   return state;

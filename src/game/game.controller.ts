@@ -16,11 +16,11 @@ import { Game } from './game.entity';
 import {
   updateState,
   generateSecret,
-  getHints,
   initState,
   ColorType,
   State,
   GameStatus,
+  MAX_ATTEMPT,
 } from './game';
 import { CreateGameDto, UpdateGameDto } from './dto/game.dto';
 
@@ -79,14 +79,15 @@ export class GameController {
     @Body() updateGameDto: UpdateGameDto,
   ) {
     const userColors = updateGameDto.userAttempt.split(',') as Array<ColorType>;
-
+    const secretGame = updateGameDto.secret.split(',') as Array<ColorType>;
     const state = {} as State;
     state.gameId = updateGameDto.gameId;
     state.currentAttempt = updateGameDto.feedbackId;
     state.hints = { black: updateGameDto.black, white: updateGameDto.white };
     state.status = updateGameDto.state as GameStatus;
+    state.maxAttempt = MAX_ATTEMPT;
 
-    updateState(userColors, state);
+    updateState(userColors, state, secretGame);
     updateGameDto.feedbackId = state.currentAttempt;
     updateGameDto.state = state.status;
     updateGameDto.white = state.hints.white;

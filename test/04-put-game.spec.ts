@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import superdebug from 'superagent-debugger';
 import { UpdateGameDto } from 'src/game/dto/game.dto';
 
-export const updateGame = (gameId:string, userAttempt:string ) =>
+export const updateGame = (gameId:string, userAttempt:string,secret:string ) =>
     describe('put (e2e)', () => {
         const url  = 'http://localhost:3000'
         beforeAll(() => {
@@ -16,10 +16,10 @@ export const updateGame = (gameId:string, userAttempt:string ) =>
             updateGameDto.gameId=gameId;
             updateGameDto.userAttempt =userAttempt;
             updateGameDto.feedbackId=0;
-            updateGameDto.secret ='purple,purple,yellow,green'
-            updateGameDto.state='playing'
-            updateGameDto.black='0000'
-            updateGameDto.white='0000'
+            updateGameDto.secret =secret;
+            updateGameDto.state='playing';
+            updateGameDto.black='0000';
+            updateGameDto.white='0000';
             
 
             //create game 
