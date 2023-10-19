@@ -20,8 +20,6 @@ export const updateGame = (gameId:string, userAttempt:string,secret:string ) =>
             updateGameDto.state='playing';
             updateGameDto.black='0000';
             updateGameDto.white='0000';
-            
-
             //create game 
             const res = await request(url)
             .put(`/api/game/${gameId}`)

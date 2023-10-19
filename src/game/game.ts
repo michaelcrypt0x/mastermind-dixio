@@ -64,7 +64,6 @@ export const generateSecret = (): Array<ColorType> => {
 
 
 // update the game state
-
 /* check for pegs on correct position (black pegs)*/
 const blackPeg = (userCombination, secretCombination, hints: Hints) => {
   for (let i = 0; i < PEGS_PER_ROW; i += 1) {

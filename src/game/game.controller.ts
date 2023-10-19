@@ -88,9 +88,6 @@ export class GameController {
     state.hints = { black: updateGameDto.black, white: updateGameDto.white };
     state.status = updateGameDto.state as GameStatus;
     state.maxAttempt = MAX_ATTEMPT;
-
-
-
     updateState(userColors, state, secretGame);
     updateGameDto.feedbackId = state.currentAttempt;
     updateGameDto.state = state.status;

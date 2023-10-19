@@ -10,9 +10,6 @@ lerna-debug.log*
 # OS
 .DS_Store
 
-# Tests
-/coverage
-
 
 # IDE - VSCode
 .vscode/*
@@ -30,6 +27,4 @@ lerna-debug.log*
 #  config
 *config.json
 
-# typescript
-*.tsbuildinfo
 
